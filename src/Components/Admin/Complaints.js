@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Box } from '@mui/material';
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 const Complaints = () => {
   const [userComplaints, setUserComplaints] = useState([]);
   const [spComplaints, setSpComplaints] = useState([]);
@@ -12,7 +14,7 @@ const Complaints = () => {
   useEffect(() => {
     const fetchComplaints = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/users/get/all/complaints');
+        const res = await axios.get(`${BASE_URL}/api/users/get/all/complaints`);
         setUserComplaints(res.data.userComplaints || []);
         setSpComplaints(res.data.spComplaints || []);
       } catch (err) {

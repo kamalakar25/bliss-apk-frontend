@@ -44,6 +44,8 @@ const buttonVariants = {
   tap: { scale: 0.95 },
 };
 
+const BASE_URL = process.env.REACT_APP_API_URL
+
 const Login = () => {
   const [form, setForm] = useState({ identifier: '', password: '' });
   const [errors, setErrors] = useState({ identifier: '', password: '' });
@@ -175,7 +177,7 @@ const Login = () => {
 
     try {
       setIsLoading(true);
-      const response = await fetch('http://localhost:5000/api/users/login', {
+      const response = await fetch(`${BASE_URL}/api/users/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...form, role: selectedRole }),

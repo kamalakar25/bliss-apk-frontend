@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import axios from 'axios';
 
+const BASE_URL = process.env.REACT_APP_API_URL
+
 const SuccessMessage = ({ message, onClose, screenWidth }) => {
   useEffect(() => {
     const timer = setTimeout(onClose, 3000);
@@ -214,7 +216,7 @@ const ServicePage = () => {
     const getRole = async () => {
       try {
         const email = localStorage.getItem('email');
-        const response = await axios.get(`http://localhost:5000/api/users/role/${email}`);
+        const response = await axios.get(`${BASE_URL}/api/users/role/${email}`);
         setRole(response.data.role);
       } catch (error) {
         console.error('Error fetching role:', error);
@@ -226,7 +228,7 @@ const ServicePage = () => {
   const fetchServices = async () => {
     const userEmail = localStorage.getItem('email');
     try {
-      const response = await axios.get(`http://localhost:5000/api/admin/get-services/${userEmail}`);
+      const response = await axios.get(`${BASE_URL}/api/admin/get-services/${userEmail}`);
       setServices(response.data);
     } catch (error) {
       console.error('Error fetching services:', error);
@@ -259,7 +261,7 @@ const ServicePage = () => {
       style: services[index].style || '',
       price: services[index].price,
       imageFile: null,
-      imagePreview: services[index].shopImage ? `http://localhost:5000/${services[index].shopImage}` : ''
+      imagePreview: services[index].shopImage ? `${BASE_URL}/${services[index].shopImage}` : ''
     });
     setIsEditing(true);
     setEditIndex(index);
@@ -287,7 +289,7 @@ const ServicePage = () => {
     const userEmail = localStorage.getItem('email');
 
     try {
-      const response = await axios.post(`http://localhost:5000/api/admin/add-service/${userEmail}`, form, {
+      const response = await axios.post(`${BASE_URL}/api/admin/add-service/${userEmail}`, form, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       if (response.status === 200) {
@@ -316,7 +318,7 @@ const ServicePage = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/admin/update-service/${serviceId}`,
+        `${BASE_URL}/api/admin/update-service/${serviceId}`,
         form,
         { headers: { 'Content-Type': 'multipart/form-data' } }
       );
@@ -350,7 +352,7 @@ const ServicePage = () => {
       setShowDeleteModal(false);
       setDeletingServiceId(null);
       try {
-        await axios.delete(`http://localhost:5000/api/admin/deleteService/${_id}`);
+        await axios.delete(`${BASE_URL}/api/admin/deleteService/${_id}`);
         fetchServices();
         const totalPages = Math.ceil(services.length / servicesPerPage);
         if (currentPage > totalPages && currentPage > 1) {
@@ -1148,7 +1150,7 @@ const ServicePage = () => {
                   <strong style={{ color: '#1abc9c', fontSize: isVerySmallScreen ? '0.85rem' : '0.9rem', fontWeight: 600, lineHeight: 1.5 }}>Image:</strong>
                   {svc.shopImage ? (
                     <img
-                      src={`http://localhost:5000/${svc.shopImage}`}
+                      src={`${BASE_URL}/${svc.shopImage}`}
                       alt={svc.serviceName}
                       style={{
                         width: isVerySmallScreen ? '60px' : '80px',
@@ -1495,7 +1497,7 @@ const ServicePage = () => {
                     <td style={{ padding: screenWidth <= 1024 ? '8px' : '10px' }}>
                       {svc.shopImage ? (
                         <img
-                          src={`http://localhost:5000/${svc.shopImage}`}
+                          src={`${BASE_URL}/${svc.shopImage}`}
                           alt={svc.serviceName}
                           style={{
                             width: '60px',

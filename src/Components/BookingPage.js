@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 const BookingPage = () => {
   const [bookings, setBookings] = useState([]);
   const [filteredBookings, setFilteredBookings] = useState([]);
@@ -19,7 +21,7 @@ const BookingPage = () => {
       const email = localStorage.getItem('email');
 
       try {
-        const res = await axios.get(`http://localhost:5000/api/users/coustomer/bookings/${email}`);
+        const res = await axios.get(`${BASE_URL}/api/users/coustomer/bookings/${email}`);
         const users = res.data;
 
         const allBookings = users.flatMap(user =>
@@ -147,7 +149,7 @@ const BookingPage = () => {
     if (!selectedBooking) return;
 
     try {
-      const response = await axios.post('http://localhost:5000/api/users/update/booking/rating', {
+      const response = await axios.post(`${BASE_URL}/api/users/update/booking/rating`, {
         email,
         orderId: selectedBooking.orderId,
         userRating: rating,
@@ -197,7 +199,7 @@ const BookingPage = () => {
     if (!selectedBooking) return;
 
     try {
-      const response = await axios.post('http://localhost:5000/api/users/update/booking/complaint', {
+      const response = await axios.post(`${BASE_URL}/api/users/update/booking/complaint`, {
         email,
         orderId: selectedBooking.orderId,
         userComplaint: complaint

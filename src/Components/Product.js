@@ -23,6 +23,8 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 // Styled component for hover effects
 const StyledCard = styled(Card)(({ theme }) => ({
   '&:hover': {
@@ -183,7 +185,7 @@ const handleLogin = async (e) => {
 
   try {
     const response = await axios.post(
-      'http://localhost:5000/api/users/login',
+      `${BASE_URL}/api/users/login`,
       {
         identifier,
         password,
@@ -225,7 +227,7 @@ const handleLogin = async (e) => {
         return;
       }
   
-      const response = await axios.get(`http://localhost:5000/api/users/check/login/${email1}`);
+      const response = await axios.get(`${BASE_URL}/api/users/check/login/${email1}`);
   
       if (response.status === 200 && response.data.loginData) {
         // Pass parlor data to the payment page
@@ -493,12 +495,12 @@ const Product = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get('http://localhost:5000/api/users/cards/services')
+      .get(`${BASE_URL}/api/users/cards/services`)
       .then((response) => {
         const parsed = response.data.map((item, index) => ({
           id: index + 1,
           name: item.shopName || 'No Name',
-          image: item.shopImage ? `http://localhost:5000/${item.shopImage}` : 'placeholder.jpg',
+          image: item.shopImage ? `${BASE_URL}/${item.shopImage}` : 'placeholder.jpg',
           location: item.location || null,
           service: item.serviceName || 'Service',
           rating: item.rating || 0,

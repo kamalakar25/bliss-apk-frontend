@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 const ConfirmationModal = ({ isOpen, onClose, booking, inputId, setInputId, isConfirmed, setIsConfirmed, error, setError, onConfirm }) => {
   if (!isOpen || !booking) return null;
 
@@ -9,7 +12,7 @@ const ConfirmationModal = ({ isOpen, onClose, booking, inputId, setInputId, isCo
 
     if (inputId === booking.pin) {
       try {
-        const response = await axios.put('http://localhost:5000/api/users/update-confirmation', {
+        const response = await axios.put(`${BASE_URL}/api/users/update-confirmation`, {
           email: userEmail,
           bookingId: booking._id,
         });
@@ -212,7 +215,7 @@ const ComplaintModal = ({ isOpen, onClose, booking, complaintText, setComplaintT
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/api/users/submit-complaint', {
+      const response = await axios.post(`${BASE_URL}/api/users/submit-complaint`, {
         email: userEmail,
         bookingId: booking._id,
         complaint: complaintText,
@@ -443,7 +446,7 @@ const BookingPage = () => {
 
   useEffect(() => {
     const email = localStorage.getItem('email');
-    fetch(`http://localhost:5000/api/users/sp/bookings/${email}`)
+    fetch(`${BASE_URL}/api/users/sp/bookings/${email}`)
       .then(res => res.json())
       .then(data => setBookings(data))
       .catch(err => console.error('Failed to fetch bookings:', err));

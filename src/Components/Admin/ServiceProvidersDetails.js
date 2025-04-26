@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Box } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 const DeleteButton = ({ onClick }) => {
   return (
     <Box
@@ -124,7 +126,7 @@ const ServiceProviderDetails = () => {
   useEffect(() => {
     const fetchServiceProviders = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/main/admin/get/all/service-providers');
+        const response = await axios.get(`${BASE_URL}/api/main/admin/get/all/service-providers`);
         setServiceProviders(response.data);
         setFilteredProviders(response.data);
       } catch (error) {
@@ -190,7 +192,7 @@ const ServiceProviderDetails = () => {
   const handleDelete = async () => {
     if (providerToDelete) {
       try {
-        await axios.delete(`http://localhost:5000/api/main/admin/delete/${providerToDelete}`);
+        await axios.delete(`${BASE_URL}/api/main/admin/delete/${providerToDelete}`);
         setServiceProviders(serviceProviders.filter((provider) => provider._id !== providerToDelete));
         setShowModal(false);
         setProviderToDelete(null);

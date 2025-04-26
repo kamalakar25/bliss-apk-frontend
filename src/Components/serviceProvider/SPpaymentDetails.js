@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 const SPpaymentDetails = () => {
   const [bookings, setBookings] = useState([]);
   const [filterText, setFilterText] = useState('');
@@ -15,7 +17,7 @@ const SPpaymentDetails = () => {
 
   useEffect(() => {
     const email = localStorage.getItem('email');
-    fetch(`http://localhost:5000/api/users/sp/bookings/${email}`)
+    fetch(`${BASE_URL}/api/users/sp/bookings/${email}`)
       .then(res => res.json())
       .then(data => setBookings(data))
       .catch(err => console.error('Failed to fetch bookings:', err));

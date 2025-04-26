@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Box } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 // DeleteButton component (unchanged)
 const DeleteButton = ({ onClick }) => {
   return (
@@ -126,7 +128,7 @@ const UserDetails = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/users/get/all/users');
+        const response = await axios.get(`${BASE_URL}/api/users/get/all/users`);
         setUsers(response.data);
         setFilteredUsers(response.data);
       } catch (error) {
@@ -181,7 +183,7 @@ const UserDetails = () => {
   const handleDelete = async () => {
     if (userToDelete) {
       try {
-        await axios.delete(`http://localhost:5000/api/users/${userToDelete}`);
+        await axios.delete(`${BASE_URL}/api/users/${userToDelete}`);
         setUsers(users.filter((user) => user._id !== userToDelete));
         setShowModal(false);
         setUserToDelete(null);

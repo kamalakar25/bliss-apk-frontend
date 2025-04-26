@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Box, Button } from '@mui/material';
 
+const BASE_URL = process.env.REACT_APP_API_URL
+
 const Approvals = () => {
   const [providers, setProviders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -10,7 +12,7 @@ const Approvals = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:5000/api/main/admin/service-providers/pending')
+      .get(`${BASE_URL}/api/main/admin/service-providers/pending`)
       .then((res) => {
         setProviders(res.data);
         setLoading(false);
@@ -25,7 +27,7 @@ const Approvals = () => {
     const isConfirmed = window.confirm('Are you sure you want to approve this service provider?');
     if (isConfirmed) {
       axios
-        .post(`http://localhost:5000/api/main/admin/service-providers/approve/${id}`)
+        .post(`${BASE_URL}/api/main/admin/service-providers/approve/${id}`)
         .then((res) => {
           setProviders((prev) => prev.filter((provider) => provider._id !== id));
         })
@@ -37,7 +39,7 @@ const Approvals = () => {
     const isConfirmed = window.confirm('Are you sure you want to reject this service provider?');
     if (isConfirmed) {
       axios
-        .post(`http://localhost:5000/api/main/admin/service-providers/reject/${id}`)
+        .post(`${BASE_URL}/api/main/admin/service-providers/reject/${id}`)
         .then((res) => {
           setProviders((prev) => prev.filter((provider) => provider._id !== id));
         })

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import axios from 'axios';
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 const SuccessMessage = ({ message, onClose, screenWidth }) => {
   useEffect(() => {
     const timer = setTimeout(onClose, 3000);
@@ -234,7 +236,7 @@ const AdminPage = () => {
   const fetchEmployees = async () => {
     const email = localStorage.getItem('email');
     try {
-      const response = await axios.get(`http://localhost:5000/api/admin/get-manpower/${email}`);
+      const response = await axios.get(`${BASE_URL}/api/admin/get-manpower/${email}`);
       setEmployees(response.data);
     } catch (error) {
       console.error('Error fetching employees:', error);
@@ -312,7 +314,7 @@ const AdminPage = () => {
     const email = localStorage.getItem('email');
     try {
       if (isEditing) {
-        await axios.put(`http://localhost:5000/api/admin/update-manpower/${_id}`, {
+        await axios.put(`${BASE_URL}/api/admin/update-manpower/${_id}`, {
           name: formData.name,
           phone: formData.phone,
           salary: parseFloat(formData.salary),
@@ -324,7 +326,7 @@ const AdminPage = () => {
         setIsEditing(false);
         setEditIndex(null);
       } else {
-        await axios.post(`http://localhost:5000/api/admin/add-manpower/${email}`, {
+        await axios.post(`${BASE_URL}/api/admin/add-manpower/${email}`, {
           name: formData.name,
           phone: formData.phone,
           salary: parseFloat(formData.salary),
@@ -377,7 +379,7 @@ const AdminPage = () => {
       setShowDeleteModal(false);
       setDeletingEmployeeId(null);
       try {
-        await axios.delete(`http://localhost:5000/api/admin/delete-manpower/${_id}`);
+        await axios.delete(`${BASE_URL}/api/admin/delete-manpower/${_id}`);
         fetchEmployees();
         const totalPages = Math.ceil((employees.length - 1) / employeesPerPage);
         if (currentPage > totalPages && totalPages > 0) {

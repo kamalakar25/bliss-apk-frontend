@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Box } from '@mui/material';
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 const RevenuePage = () => {
     const [revenueData, setRevenueData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
@@ -13,7 +15,7 @@ const RevenuePage = () => {
     useEffect(() => {
         const fetchRevenue = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/main/admin/revenue');
+                const response = await axios.get(`${BASE_URL}/api/main/admin/revenue`);
                 const flatData = response.data.flat().reverse();
                 setRevenueData(flatData);
                 setFilteredData(flatData);

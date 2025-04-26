@@ -12,6 +12,8 @@ import {
 import axios from "axios";
 import { jsPDF } from "jspdf";
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 const PaymentCallback = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -28,7 +30,7 @@ const PaymentCallback = () => {
     try {
   
       const response = await axios.get(
-        `http://localhost:5000/api/razorpay/verify?order_id=${orderId}`
+        `${BASE_URL}/api/razorpay/verify?order_id=${orderId}`
       );
       console.log("Payment verification response from /verify:", response.data);
       return response.data.data;

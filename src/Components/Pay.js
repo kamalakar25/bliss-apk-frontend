@@ -22,6 +22,8 @@ import {
   QrCode, // For UPI
 } from "@mui/icons-material"; // Import Material-UI icons
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 const Pay = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -133,7 +135,7 @@ const Pay = () => {
 
       console.log("Sending booking data to /order:", bookingData);
       const response = await axios.post(
-        "http://localhost:5000/api/razorpay/order",
+        `${BASE_URL}/api/razorpay/order`,
         bookingData
       );
       const { order, bookingId } = response.data;
@@ -156,7 +158,7 @@ const Pay = () => {
           let pin = Math.floor(Math.random() * 90000) + 10000;
           try {
             const validationResponse = await axios.post(
-              "http://localhost:5000/api/razorpay/order/validate",
+              `${BASE_URL}/api/razorpay/order/validate`,
               {
                 pin,
                 razorpay_order_id: response.razorpay_order_id,
@@ -232,7 +234,7 @@ const Pay = () => {
         setError(`Payment failed: ${failureReason}`);
         try {
           const errorResponse = await axios.post(
-            "http://localhost:5000/api/razorpay/order/validate",
+            `${BASE_URL}/api/razorpay/order/validate`,
             {
               razorpay_order_id: response.error.metadata.order_id,
               razorpay_payment_id: response.error.metadata.payment_id,

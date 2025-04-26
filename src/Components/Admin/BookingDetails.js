@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Box } from '@mui/material';
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 const BookingDetails = () => {
     const [bookings, setBookings] = useState([]);
     const [filteredBookings, setFilteredBookings] = useState([]);
@@ -14,7 +16,9 @@ const BookingDetails = () => {
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/users/all/bookings`);
+                const response = await axios.get(
+                  `${BASE_URL}/api/users/all/bookings`
+                );
                 const data = Array.isArray(response.data) ? response.data : response.data.bookings || [];
                 setBookings(data);
                 setFilteredBookings(data);

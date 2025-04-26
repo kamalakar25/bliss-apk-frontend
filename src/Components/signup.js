@@ -17,6 +17,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 const formAnimation = keyframes`
   from { transform: rotateX(-30deg); opacity: 0; }
   to { transform: rotateX(0deg); opacity: 1; }
@@ -114,8 +116,8 @@ export default function SignupForm() {
 
     const endpoint =
       form.designation.toLowerCase() === 'user'
-        ? 'http://localhost:5000/api/users/register'
-        : 'http://localhost:5000/api/admin/register-admin';
+        ? `${BASE_URL}/api/users/register`
+        : `${BASE_URL}/api/admin/register-admin`;
 
     try {
       setIsLoading(true);

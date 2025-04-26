@@ -21,6 +21,9 @@ import { ExpandMore, ExpandLess, Close } from '@mui/icons-material';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 const BookSlot = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -147,7 +150,7 @@ const BookSlot = () => {
 
   const fetchManPower = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/admin/get-manpower/${encodeURIComponent(parlor.email)}`);
+      const response = await axios.get(`${BASE_URL}/api/admin/get-manpower/${encodeURIComponent(parlor.email)}`);
       setManPower(response.data);
     } catch (error) {
       console.error('Error fetching manPower:', error.response?.data?.message || error.message);
@@ -159,7 +162,7 @@ const BookSlot = () => {
   const fetchBookedSlots = async (employeeName, date) => {
     const userEmail = localStorage.getItem('email');
     try {
-      const response = await axios.get(`http://localhost:5000/api/users/bookings/${userEmail}`);
+      const response = await axios.get(`${BASE_URL}/api/users/bookings/${userEmail}`);
       const filteredBookings = response.data.bookings
         .filter(
           (booking) =>
