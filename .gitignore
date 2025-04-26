@@ -1,0 +1,15 @@
+# Node modules
+node_modules/
+
+# Build output
+build/
+dist/
+.next/
+out/
+
+# VSCode settings
+.vscode/
+
+# Other
+.DS_Store
+.env
