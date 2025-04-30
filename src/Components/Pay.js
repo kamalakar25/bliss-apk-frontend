@@ -147,7 +147,7 @@ const Pay = () => {
       }
 
       const options = {
-        key: "rzp_test_MXI4WZ4saBJ7Jb",
+        key: "rzp_test_UlCC6Rw2IJrhyh",
         amount: order.amount,
         currency: order.currency,
         name: "Parlor Booking",
